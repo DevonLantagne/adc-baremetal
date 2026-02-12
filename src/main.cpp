@@ -11,8 +11,8 @@ Outputs readings to Serial as byte stream.
 #define BAUD_RATE   115200
 #define ADC_CHANNEL 5       // PA0 maps to ADC channel 5
 #define ADC_PIN     0       // PA0 is pin 0 on GPIOA
-#define SAMP_TIME   0       // ADC sampling time bitval (18.7.6)
-#define SAMP_RATE   100      // Approx delay between samples in ms
+#define SAMP_TIME   7U       // ADC sampling time bitval (18.7.6)
+#define SAMP_RATE   200      // Approx delay between samples in ms
 #define PIN_SAMPLE  D3      // PIN to measure time for conversions
 #define PIN_SERIAL  D4      // PIN to measure time for serial transmissions
 #define SAMP_PERIOD 1000000/SAMP_RATE  // units of us
@@ -82,7 +82,7 @@ void adc_init(void){
         ADC1->CR |= ADC_CR_ADDIS; // Start "power-down" procedure for ADC
         while (ADC1->CR & ADC_CR_ADEN); // Wait for ADC module to be disabled
     }
-    // Begin startup procedure (18.4.6)
+    // Begin startup procedure (18.4.6 ADC_CR)
     ADC1->CR &= ~ADC_CR_DEEPPWD;        // Disable Deep Power Down mode
     ADC1->CR |= ADC_CR_ADVREGEN;        // Enable ADC internal regulator
     // Wait ~20 us for calibration (datasheet requirement)
